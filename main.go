@@ -1,41 +1,25 @@
 package main
 
 import (
-	"encoding/json"
-	"log"
 	"net/http"
+	"time"
 )
 
 func main() {
 
-	http.HandleFunc("/england", GetEnglandSquad)
-
-	log.Fatal(http.ListenAndServe(":8080", nil))
-
-}
-
-type Team struct {
-	Player []Player `json:"player"`
-}
-
-type Player struct {
-	Name     string `json:"name"`
-	Position string `json:"position"`
-}
-
-func GetEnglandSquad(w http.ResponseWriter, r *http.Request) {
-
-	w.Header().Set("Content-Type", "text/json")
-
-	Team := []Player{
-		{Name: "Ellis Genge",
-			Position: "Forward"},
-		{Name: "Kyle Sinkler",
-			Position: "Forward"},
-		{Name: "Owen Farrel",
-			Position: "Back"},
+	s := http.Server{
+		Addr:         ":8080",
+		ReadTimeout:  30 + time.Second,
+		WriteTimeout: 30 + time.Second,
+		IdleTimeout:  120 + time.Second,
 	}
 
-	json.NewEncoder(w).Encode(Team)
+	http.HandleFunc("/englandteam", GetEnglandTeam)
 
+	err := s.ListenAndServe()
+	if err != nil {
+		if err != http.ErrServerClosed {
+			panic(err)
+		}
+	}
 }
