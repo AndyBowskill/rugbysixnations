@@ -11,9 +11,20 @@ type Team struct {
 	Backs     []string `json:"backs"`
 }
 
+func setHeader(w http.ResponseWriter) {
+	w.Header().Set("Content-Type", "text/json")
+}
+
+func jsonEncoder(w http.ResponseWriter, team *Team) {
+	err := json.NewEncoder(w).Encode(team)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func GetEnglandTeam(w http.ResponseWriter, r *http.Request) {
 
-	w.Header().Set("Content-Type", "text/json")
+	setHeader(w)
 
 	team := &Team{
 		"Steve Borthwick",
@@ -25,8 +36,56 @@ func GetEnglandTeam(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	err := json.NewEncoder(w).Encode(team)
-	if err != nil {
-		panic(err)
+	jsonEncoder(w, team)
+}
+
+func GetScotlandTeam(w http.ResponseWriter, r *http.Request) {
+
+	setHeader(w)
+
+	team := &Team{
+		"Gregor Townsend",
+		[]string{
+			"Ewan Ashman", "Josh Bayliss", "Simon Berghan", "Jamie Bhatti", "Fraser Brown", "Dave Cherry", "Andy Christie", "Luke Crosbie", "Jack Dempsey", "Matt Fagerson", "Zander Fagerson", "Grant Gilchrist", "Jonny Gray", "Richie Gray", "Cameron Henderson", "WP Nel", "Jamie Ritchie", "Pierre Schoeman", "Javan Sebastian", "Sam Skinner", "Rory Sutherland", "George Turner", "Hamish Watson",
+		},
+		[]string{
+			"Chris Harris", "Ben Healy", "Stuart Hogg", "George Horne", "Huw Jones", "Blair Kinghorn", "Sean Maitland", "Ruaridh McConnochie", "Stafford McDowell", "Ali Price", "Cameron Redpath", "Finn Russell", "Ollie Smith", "Kyle Steyn", "Sione Tuipulotu", "Duhan van der Merwe", "Ben White",
+		},
 	}
+
+	jsonEncoder(w, team)
+}
+
+func GetWalesTeam(w http.ResponseWriter, r *http.Request) {
+
+	setHeader(w)
+
+	team := &Team{
+		"Warren Gatland",
+		[]string{
+			"Rhys Carre", "Wyn Jones", "Gareth Thomas", "Dewi Lake", "Ken Owens", "Bradley Roberts", "Leon Brown", "Tomas Francis", "Dillon Lewis", "Adam Beard", "Rhys Davies", "Dafydd Jenkins", "Alun Wyn Jones", "Teddy Williams", "Taulupe Faletau", "Jac Morgan", "Tommy Reffell", "Justin Tipuric", "Christ Tshiunza", "Aaron Wainwright",
+		},
+		[]string{
+			"Kieran Hardy", "Rhys Webb", "Tomos Williams", "Dan Biggar", "Rhys Patchell", "Owen Williams", "Mason Grady", "Joe Hawkins", "George North", "Nick Tompkins", "Keiran Williams", "Josh Adams", "Alex Cuthbert", "Rio Dyer", "Leigh Halfpenny", "Louis Rees-Zammit", "Liam Williams",
+		},
+	}
+
+	jsonEncoder(w, team)
+}
+
+func GetIrelandTeam(w http.ResponseWriter, r *http.Request) {
+
+	setHeader(w)
+
+	team := &Team{
+		"Andy Farrell",
+		[]string{
+			"Aki", "R Byrne", "Casey", "Crowley", "Earls", "Gibson-Park", "Keenan", "Larmour", "Lowe", "McCloskey", "Murray", "O'Brien", "Osborne", "Ringrose", "Sexton", "Stockdale",
+		},
+		[]string{
+			"Baird", "Bealham", "Beirne", "Conan", "Coombes", "Doris", "Furlong", "Healy", "Henderson", "Herring", "Kelleher", "Kilcoyne", "McCarthy", "O'Mahony", "O'Toole", "Porter", "Prendergast", "Ryan", "D Sheehan", "Van der Flier",
+		},
+	}
+
+	jsonEncoder(w, team)
 }

@@ -15,6 +15,9 @@ func main() {
 	}
 
 	http.HandleFunc("/englandteam", GetEnglandTeam)
+	http.HandleFunc("/scotlandteam", GetScotlandTeam)
+	http.HandleFunc("/walesteam", GetWalesTeam)
+	http.HandleFunc("/irelandteam", GetIrelandTeam)
 
 	err := s.ListenAndServe()
 	if err != nil {
