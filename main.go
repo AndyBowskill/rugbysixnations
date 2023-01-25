@@ -14,10 +14,10 @@ func main() {
 		IdleTimeout:  120 + time.Second,
 	}
 
-	http.HandleFunc("/englandteam", GetEnglandTeam)
-	http.HandleFunc("/scotlandteam", GetScotlandTeam)
-	http.HandleFunc("/walesteam", GetWalesTeam)
-	http.HandleFunc("/irelandteam", GetIrelandTeam)
+	http.HandleFunc("/englandteam", getEnglandTeam)
+	http.HandleFunc("/scotlandteam", getScotlandTeam)
+	http.HandleFunc("/walesteam", getWalesTeam)
+	http.HandleFunc("/irelandteam", getIrelandTeam)
 
 	err := s.ListenAndServe()
 	if err != nil {
