@@ -2,7 +2,7 @@ package main
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -44,7 +44,7 @@ func TestGetEnglandTeam(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	bytes, err := ioutil.ReadAll(res.Body)
+	bytes, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("expected error to be nil got %v", err)
 	}
@@ -89,7 +89,7 @@ func TestGetScotlandTeam(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	bytes, err := ioutil.ReadAll(res.Body)
+	bytes, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("expected error to be nil got %v", err)
 	}
@@ -134,7 +134,7 @@ func TestGetWalesTeam(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	bytes, err := ioutil.ReadAll(res.Body)
+	bytes, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("expected error to be nil got %v", err)
 	}
@@ -179,7 +179,7 @@ func TestGetIrelandTeam(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	bytes, err := ioutil.ReadAll(res.Body)
+	bytes, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("expected error to be nil got %v", err)
 	}
