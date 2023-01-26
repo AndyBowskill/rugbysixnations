@@ -20,22 +20,22 @@ func createTeam(headCoach string, forwards, backs []string) Team {
 
 }
 
-func setHeader(w http.ResponseWriter) {
-	w.Header().Set("Content-Type", "text/json")
+func setHeader(resWri http.ResponseWriter) {
+	resWri.Header().Set("Content-Type", "text/json")
 }
 
-func jsonEncoder(w http.ResponseWriter, team *Team) {
-	err := json.NewEncoder(w).Encode(team)
+func jsonEncoder(resWri http.ResponseWriter, team *Team) {
+	err := json.NewEncoder(resWri).Encode(team)
 	if err != nil {
 		panic(err)
 	}
 }
 
-func getEnglandTeam(w http.ResponseWriter, r *http.Request) {
+func getEnglandTeam(resWri http.ResponseWriter, req *http.Request) {
 
-	setHeader(w)
+	setHeader(resWri)
 
-	if r.Method == http.MethodGet {
+	if req.Method == http.MethodGet {
 
 		team := &Team{
 			"Steve Borthwick",
@@ -46,18 +46,18 @@ func getEnglandTeam(w http.ResponseWriter, r *http.Request) {
 				"Elliot Daly", "Owen Farrell", "Tommy Freeman", "Ollie Hassell-Collins", "Dan Kelly", "Max Malins", "Joe Marchant", "Alex Mitchell", "Cadan Murley", "Henry Slade", "Fin Smith", "Marcus Smith", "Freddie Steward", "Manu Tuilagi", "Jack van Poortvliet", "Ben Youngs",
 			},
 		}
-		jsonEncoder(w, team)
+		jsonEncoder(resWri, team)
 
 	} else {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		http.Error(resWri, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 }
 
-func getScotlandTeam(w http.ResponseWriter, r *http.Request) {
+func getScotlandTeam(resWri http.ResponseWriter, req *http.Request) {
 
-	setHeader(w)
+	setHeader(resWri)
 
-	if r.Method == http.MethodGet {
+	if req.Method == http.MethodGet {
 
 		team := &Team{
 			"Gregor Townsend",
@@ -68,18 +68,18 @@ func getScotlandTeam(w http.ResponseWriter, r *http.Request) {
 				"Chris Harris", "Ben Healy", "Stuart Hogg", "George Horne", "Huw Jones", "Blair Kinghorn", "Sean Maitland", "Ruaridh McConnochie", "Stafford McDowell", "Ali Price", "Cameron Redpath", "Finn Russell", "Ollie Smith", "Kyle Steyn", "Sione Tuipulotu", "Duhan van der Merwe", "Ben White",
 			},
 		}
-		jsonEncoder(w, team)
+		jsonEncoder(resWri, team)
 
 	} else {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		http.Error(resWri, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 }
 
-func getWalesTeam(w http.ResponseWriter, r *http.Request) {
+func getWalesTeam(resWri http.ResponseWriter, req *http.Request) {
 
-	setHeader(w)
+	setHeader(resWri)
 
-	if r.Method == http.MethodGet {
+	if req.Method == http.MethodGet {
 
 		team := &Team{
 			"Warren Gatland",
@@ -90,18 +90,18 @@ func getWalesTeam(w http.ResponseWriter, r *http.Request) {
 				"Kieran Hardy", "Rhys Webb", "Tomos Williams", "Dan Biggar", "Rhys Patchell", "Owen Williams", "Mason Grady", "Joe Hawkins", "George North", "Nick Tompkins", "Keiran Williams", "Josh Adams", "Alex Cuthbert", "Rio Dyer", "Leigh Halfpenny", "Louis Rees-Zammit", "Liam Williams",
 			},
 		}
-		jsonEncoder(w, team)
+		jsonEncoder(resWri, team)
 
 	} else {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		http.Error(resWri, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 }
 
-func getIrelandTeam(w http.ResponseWriter, r *http.Request) {
+func getIrelandTeam(resWri http.ResponseWriter, req *http.Request) {
 
-	setHeader(w)
+	setHeader(resWri)
 
-	if r.Method == http.MethodGet {
+	if req.Method == http.MethodGet {
 
 		team := &Team{
 			"Andy Farrell",
@@ -112,9 +112,9 @@ func getIrelandTeam(w http.ResponseWriter, r *http.Request) {
 				"Baird", "Bealham", "Beirne", "Conan", "Coombes", "Doris", "Furlong", "Healy", "Henderson", "Herring", "Kelleher", "Kilcoyne", "McCarthy", "O'Mahony", "O'Toole", "Porter", "Prendergast", "Ryan", "D Sheehan", "Van der Flier",
 			},
 		}
-		jsonEncoder(w, team)
+		jsonEncoder(resWri, team)
 
 	} else {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		http.Error(resWri, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 }
