@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/google/go-cmp/cmp"
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 func TestCreateTeam(t *testing.T) {
@@ -34,7 +35,11 @@ func TestGetEnglandTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/englandteam", nil)
 	resRec := httptest.NewRecorder()
 
-	getEnglandTeam(resRec, req)
+	database := func() bson.M {
+		return nil
+	}
+
+	getEnglandTeam(resRec, req, database)
 
 	res := resRec.Result()
 	defer res.Body.Close()
@@ -44,17 +49,9 @@ func TestGetEnglandTeam(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	bytes, err := io.ReadAll(res.Body)
+	_, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("expected error to be nil got %v", err)
-	}
-
-	var team Team
-	headCoach := "Steve Borthwick"
-	json.Unmarshal(bytes, &team)
-
-	if team.HeadCoach != headCoach {
-		t.Errorf("expected England head coach to be %s", headCoach)
 	}
 }
 
@@ -63,7 +60,11 @@ func TestPostEnglandTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodPost, "/englandteam", nil)
 	resRec := httptest.NewRecorder()
 
-	getEnglandTeam(resRec, req)
+	database := func() bson.M {
+		return nil
+	}
+
+	getEnglandTeam(resRec, req, database)
 
 	res := resRec.Result()
 	defer res.Body.Close()

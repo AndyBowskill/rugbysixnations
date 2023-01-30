@@ -3,6 +3,8 @@ package main
 import (
 	"encoding/json"
 	"net/http"
+
+	"go.mongodb.org/mongo-driver/bson"
 )
 
 type Team struct {
@@ -37,13 +39,21 @@ func jsonEncoderTeam(resWri http.ResponseWriter, v any) {
 	}
 }
 
-func getEnglandTeam(resWri http.ResponseWriter, req *http.Request) {
+func englandTeam(resWri http.ResponseWriter, req *http.Request) {
+
+	database := func() bson.M {
+		return getTeamFromMongoDB("England")
+	}
+
+	getEnglandTeam(resWri, req, database)
+}
+
+func getEnglandTeam(resWri http.ResponseWriter, req *http.Request, englandTeam database) {
 
 	setHeader(resWri)
 
 	if req.Method == http.MethodGet {
-
-		team := getTeamFromMongoDB("England")
+		team := englandTeam()
 		jsonEncoderTeam(resWri, team)
 
 	} else {
