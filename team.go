@@ -17,7 +17,6 @@ func createTeam(headCoach string, forwards, backs []string) Team {
 		Forwards:  forwards,
 		Backs:     backs,
 	}
-
 }
 
 func setHeader(resWri http.ResponseWriter) {
@@ -31,22 +30,21 @@ func jsonEncoder(resWri http.ResponseWriter, team *Team) {
 	}
 }
 
+func jsonEncoderTeam(resWri http.ResponseWriter, v any) {
+	err := json.NewEncoder(resWri).Encode(v)
+	if err != nil {
+		panic(err)
+	}
+}
+
 func getEnglandTeam(resWri http.ResponseWriter, req *http.Request) {
 
 	setHeader(resWri)
 
 	if req.Method == http.MethodGet {
 
-		team := &Team{
-			"Steve Borthwick",
-			[]string{
-				"Ollie Chessum", "Dan Cole", "Ben Curry", "Alex Dombrandt", "Ben Earl", "Ellis Genge", "Jamie George", "Joe Heyes", "Jonny Hill", "Nick Isiekwe", "Maro Itoje", "Courtney Lawes", "Lewis Ludlam", "George McGuigan", "Bevan Rodd", "Sam Simmonds", "Kyle Sinckler", "Mako Vunipola", "Jack Walker", "Jack Willis",
-			},
-			[]string{
-				"Elliot Daly", "Owen Farrell", "Tommy Freeman", "Ollie Hassell-Collins", "Dan Kelly", "Max Malins", "Joe Marchant", "Alex Mitchell", "Cadan Murley", "Henry Slade", "Fin Smith", "Marcus Smith", "Freddie Steward", "Manu Tuilagi", "Jack van Poortvliet", "Ben Youngs",
-			},
-		}
-		jsonEncoder(resWri, team)
+		team := getTeamFromMongoDB("England")
+		jsonEncoderTeam(resWri, team)
 
 	} else {
 		http.Error(resWri, "Method not allowed", http.StatusMethodNotAllowed)
