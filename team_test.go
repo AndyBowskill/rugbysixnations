@@ -1,41 +1,24 @@
 package main
 
 import (
+	"encoding/json"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
-	"github.com/google/go-cmp/cmp"
-	"go.mongodb.org/mongo-driver/bson"
 )
-
-func TestCreateTeam(t *testing.T) {
-
-	headCoach := "Steve Borthwick"
-	forwards := []string{"Ellis Genge"}
-	backs := []string{"Owen Farrell"}
-
-	expected := Team{
-		HeadCoach: headCoach,
-		Forwards:  forwards,
-		Backs:     backs,
-	}
-
-	result := createTeam(headCoach, forwards, backs)
-
-	if diff := cmp.Diff(expected, result); diff != "" {
-		t.Error(diff)
-	}
-}
 
 func TestGetEnglandTeam(t *testing.T) {
 
 	req := httptest.NewRequest(http.MethodGet, "/englandteam", nil)
 	resRec := httptest.NewRecorder()
 
-	database := func() bson.M {
-		return nil
+	englandHeadCoach := "Steve Borthwick"
+
+	database := func() teamDatabase {
+		var team teamDatabase
+		team.HeadCoach = englandHeadCoach
+		return team
 	}
 
 	getTeam(resRec, req, database)
@@ -48,9 +31,16 @@ func TestGetEnglandTeam(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	_, err := io.ReadAll(res.Body)
+	bytes, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("expected error to be nil got %v", err)
+	}
+
+	var team teamDatabase
+	json.Unmarshal(bytes, &team)
+
+	if team.HeadCoach != englandHeadCoach {
+		t.Errorf("expected England head coach to be %s", englandHeadCoach)
 	}
 }
 
@@ -59,8 +49,9 @@ func TestPostEnglandTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodPost, "/englandteam", nil)
 	resRec := httptest.NewRecorder()
 
-	database := func() bson.M {
-		return nil
+	database := func() teamDatabase {
+		var team teamDatabase
+		return team
 	}
 
 	getTeam(resRec, req, database)
@@ -79,8 +70,12 @@ func TestGetScotlandTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/scotlandteam", nil)
 	resRec := httptest.NewRecorder()
 
-	database := func() bson.M {
-		return nil
+	scotlandHeadCoach := "Gregor Townsend"
+
+	database := func() teamDatabase {
+		var team teamDatabase
+		team.HeadCoach = scotlandHeadCoach
+		return team
 	}
 
 	getTeam(resRec, req, database)
@@ -93,9 +88,16 @@ func TestGetScotlandTeam(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	_, err := io.ReadAll(res.Body)
+	bytes, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("expected error to be nil got %v", err)
+	}
+
+	var team teamDatabase
+	json.Unmarshal(bytes, &team)
+
+	if team.HeadCoach != scotlandHeadCoach {
+		t.Errorf("expected Scotland head coach to be %s", scotlandHeadCoach)
 	}
 }
 
@@ -104,8 +106,9 @@ func TestPostScotlandTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodPost, "/scotlandteam", nil)
 	resRec := httptest.NewRecorder()
 
-	database := func() bson.M {
-		return nil
+	database := func() teamDatabase {
+		var team teamDatabase
+		return team
 	}
 
 	getTeam(resRec, req, database)
@@ -124,8 +127,12 @@ func TestGetWalesTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/walesteam", nil)
 	resRec := httptest.NewRecorder()
 
-	database := func() bson.M {
-		return nil
+	walesHeadCoach := "Warren Gatland"
+
+	database := func() teamDatabase {
+		var team teamDatabase
+		team.HeadCoach = walesHeadCoach
+		return team
 	}
 
 	getTeam(resRec, req, database)
@@ -138,9 +145,16 @@ func TestGetWalesTeam(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	_, err := io.ReadAll(res.Body)
+	bytes, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("expected error to be nil got %v", err)
+	}
+
+	var team teamDatabase
+	json.Unmarshal(bytes, &team)
+
+	if team.HeadCoach != walesHeadCoach {
+		t.Errorf("expected Wales head coach to be %s", walesHeadCoach)
 	}
 }
 
@@ -149,8 +163,9 @@ func TestPostWalesTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodPost, "/walesteam", nil)
 	resRec := httptest.NewRecorder()
 
-	database := func() bson.M {
-		return nil
+	database := func() teamDatabase {
+		var team teamDatabase
+		return team
 	}
 
 	getTeam(resRec, req, database)
@@ -169,8 +184,12 @@ func TestGetIrelandTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/irelandteam", nil)
 	resRec := httptest.NewRecorder()
 
-	database := func() bson.M {
-		return nil
+	irelandHeadCoach := "Andy Farrell"
+
+	database := func() teamDatabase {
+		var team teamDatabase
+		team.HeadCoach = irelandHeadCoach
+		return team
 	}
 
 	getTeam(resRec, req, database)
@@ -183,9 +202,16 @@ func TestGetIrelandTeam(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	_, err := io.ReadAll(res.Body)
+	bytes, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("expected error to be nil got %v", err)
+	}
+
+	var team teamDatabase
+	json.Unmarshal(bytes, &team)
+
+	if team.HeadCoach != irelandHeadCoach {
+		t.Errorf("expected Ireland head coach to be %s", irelandHeadCoach)
 	}
 }
 
@@ -194,8 +220,9 @@ func TestPostIrelandTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodPost, "/irelandteam", nil)
 	resRec := httptest.NewRecorder()
 
-	database := func() bson.M {
-		return nil
+	database := func() teamDatabase {
+		var team teamDatabase
+		return team
 	}
 
 	getTeam(resRec, req, database)

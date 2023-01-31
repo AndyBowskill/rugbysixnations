@@ -3,30 +3,14 @@ package main
 import (
 	"encoding/json"
 	"net/http"
-
-	"go.mongodb.org/mongo-driver/bson"
 )
-
-type Team struct {
-	HeadCoach string   `json:"headcoach"`
-	Forwards  []string `json:"forwards"`
-	Backs     []string `json:"backs"`
-}
-
-func createTeam(headCoach string, forwards, backs []string) Team {
-	return Team{
-		HeadCoach: headCoach,
-		Forwards:  forwards,
-		Backs:     backs,
-	}
-}
 
 func setHeader(resWri http.ResponseWriter) {
 	resWri.Header().Set("Content-Type", "text/json")
 }
 
-func jsonEncoder(resWri http.ResponseWriter, v any) {
-	err := json.NewEncoder(resWri).Encode(v)
+func jsonEncoder(resWri http.ResponseWriter, team teamDatabase) {
+	err := json.NewEncoder(resWri).Encode(team)
 	if err != nil {
 		panic(err)
 	}
@@ -47,7 +31,7 @@ func getTeam(resWri http.ResponseWriter, req *http.Request, getTeamFromDB databa
 
 func getEnglandTeam(resWri http.ResponseWriter, req *http.Request) {
 
-	database := func() bson.M {
+	database := func() teamDatabase {
 		return getTeamFromMongoDB("England")
 	}
 
@@ -56,7 +40,7 @@ func getEnglandTeam(resWri http.ResponseWriter, req *http.Request) {
 
 func getScotlandTeam(resWri http.ResponseWriter, req *http.Request) {
 
-	database := func() bson.M {
+	database := func() teamDatabase {
 		return getTeamFromMongoDB("Scotland")
 	}
 
@@ -65,7 +49,7 @@ func getScotlandTeam(resWri http.ResponseWriter, req *http.Request) {
 
 func getWalesTeam(resWri http.ResponseWriter, req *http.Request) {
 
-	database := func() bson.M {
+	database := func() teamDatabase {
 		return getTeamFromMongoDB("Wales")
 	}
 
@@ -74,7 +58,7 @@ func getWalesTeam(resWri http.ResponseWriter, req *http.Request) {
 
 func getIrelandTeam(resWri http.ResponseWriter, req *http.Request) {
 
-	database := func() bson.M {
+	database := func() teamDatabase {
 		return getTeamFromMongoDB("Ireland")
 	}
 

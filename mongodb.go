@@ -11,7 +11,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-func getTeamFromMongoDB(teamName string) bson.M {
+func getTeamFromMongoDB(teamName string) teamDatabase {
 
 	if err := godotenv.Load(); err != nil {
 		panic(err)
@@ -32,11 +32,10 @@ func getTeamFromMongoDB(teamName string) bson.M {
 
 	collection := client.Database("rugbysixnations").Collection("teams")
 
-	var team bson.M
+	var team teamDatabase
 	err = collection.FindOne(context.TODO(), bson.D{{"name", teamName}}).Decode(&team)
 	if err == mongo.ErrNoDocuments {
 		fmt.Printf("No document was found with the team name %s\n", teamName)
-		return nil
 	}
 	if err != nil {
 		panic(err)
