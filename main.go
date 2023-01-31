@@ -14,7 +14,7 @@ func main() {
 		IdleTimeout:  120 + time.Second,
 	}
 
-	http.HandleFunc("/englandteam", englandTeam)
+	http.HandleFunc("/englandteam", getEnglandTeam)
 	http.HandleFunc("/scotlandteam", getScotlandTeam)
 	http.HandleFunc("/walesteam", getWalesTeam)
 	http.HandleFunc("/irelandteam", getIrelandTeam)

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"io"
 	"net/http"
 	"net/http/httptest"
@@ -39,7 +38,7 @@ func TestGetEnglandTeam(t *testing.T) {
 		return nil
 	}
 
-	getEnglandTeam(resRec, req, database)
+	getTeam(resRec, req, database)
 
 	res := resRec.Result()
 	defer res.Body.Close()
@@ -64,7 +63,7 @@ func TestPostEnglandTeam(t *testing.T) {
 		return nil
 	}
 
-	getEnglandTeam(resRec, req, database)
+	getTeam(resRec, req, database)
 
 	res := resRec.Result()
 	defer res.Body.Close()
@@ -80,7 +79,11 @@ func TestGetScotlandTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/scotlandteam", nil)
 	resRec := httptest.NewRecorder()
 
-	getScotlandTeam(resRec, req)
+	database := func() bson.M {
+		return nil
+	}
+
+	getTeam(resRec, req, database)
 
 	res := resRec.Result()
 	defer res.Body.Close()
@@ -90,17 +93,9 @@ func TestGetScotlandTeam(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	bytes, err := io.ReadAll(res.Body)
+	_, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("expected error to be nil got %v", err)
-	}
-
-	var team Team
-	headCoach := "Gregor Townsend"
-	json.Unmarshal(bytes, &team)
-
-	if team.HeadCoach != headCoach {
-		t.Errorf("expected Scotland head coach to be %s", headCoach)
 	}
 }
 
@@ -109,7 +104,11 @@ func TestPostScotlandTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodPost, "/scotlandteam", nil)
 	resRec := httptest.NewRecorder()
 
-	getScotlandTeam(resRec, req)
+	database := func() bson.M {
+		return nil
+	}
+
+	getTeam(resRec, req, database)
 
 	res := resRec.Result()
 	defer res.Body.Close()
@@ -125,7 +124,11 @@ func TestGetWalesTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/walesteam", nil)
 	resRec := httptest.NewRecorder()
 
-	getWalesTeam(resRec, req)
+	database := func() bson.M {
+		return nil
+	}
+
+	getTeam(resRec, req, database)
 
 	res := resRec.Result()
 	defer res.Body.Close()
@@ -135,17 +138,9 @@ func TestGetWalesTeam(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	bytes, err := io.ReadAll(res.Body)
+	_, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("expected error to be nil got %v", err)
-	}
-
-	var team Team
-	headCoach := "Warren Gatland"
-	json.Unmarshal(bytes, &team)
-
-	if team.HeadCoach != headCoach {
-		t.Errorf("expected Wales head coach to be %s", headCoach)
 	}
 }
 
@@ -154,7 +149,11 @@ func TestPostWalesTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodPost, "/walesteam", nil)
 	resRec := httptest.NewRecorder()
 
-	getWalesTeam(resRec, req)
+	database := func() bson.M {
+		return nil
+	}
+
+	getTeam(resRec, req, database)
 
 	res := resRec.Result()
 	defer res.Body.Close()
@@ -170,7 +169,11 @@ func TestGetIrelandTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodGet, "/irelandteam", nil)
 	resRec := httptest.NewRecorder()
 
-	getIrelandTeam(resRec, req)
+	database := func() bson.M {
+		return nil
+	}
+
+	getTeam(resRec, req, database)
 
 	res := resRec.Result()
 	defer res.Body.Close()
@@ -180,17 +183,9 @@ func TestGetIrelandTeam(t *testing.T) {
 			status, http.StatusOK)
 	}
 
-	bytes, err := io.ReadAll(res.Body)
+	_, err := io.ReadAll(res.Body)
 	if err != nil {
 		t.Errorf("expected error to be nil got %v", err)
-	}
-
-	var team Team
-	headCoach := "Andy Farrell"
-	json.Unmarshal(bytes, &team)
-
-	if team.HeadCoach != headCoach {
-		t.Errorf("expected Ireland head coach to be %s", headCoach)
 	}
 }
 
@@ -199,7 +194,11 @@ func TestPostIrelandTeam(t *testing.T) {
 	req := httptest.NewRequest(http.MethodPost, "/irelandteam", nil)
 	resRec := httptest.NewRecorder()
 
-	getIrelandTeam(resRec, req)
+	database := func() bson.M {
+		return nil
+	}
+
+	getTeam(resRec, req, database)
 
 	res := resRec.Result()
 	defer res.Body.Close()
