@@ -19,13 +19,15 @@ func getTeamFromMongoDB(teamName string) teamDatabase {
 
 	uri := os.Getenv("MONGODB_URI")
 
-	client, err := mongo.Connect(context.TODO(), options.Client().ApplyURI(uri))
+	ctx := context.Background()
+
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(uri))
 	if err != nil {
 		panic(err)
 	}
 
 	defer func() {
-		if err := client.Disconnect(context.TODO()); err != nil {
+		if err := client.Disconnect(ctx); err != nil {
 			panic(err)
 		}
 	}()
@@ -33,7 +35,7 @@ func getTeamFromMongoDB(teamName string) teamDatabase {
 	collection := client.Database("rugbysixnations").Collection("teams")
 
 	var team teamDatabase
-	err = collection.FindOne(context.TODO(), bson.D{{"name", teamName}}).Decode(&team)
+	err = collection.FindOne(ctx, bson.D{{"name", teamName}}).Decode(&team)
 	if err == mongo.ErrNoDocuments {
 		fmt.Printf("No document was found with the team name %s\n", teamName)
 	}
